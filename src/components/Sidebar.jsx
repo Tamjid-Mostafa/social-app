@@ -18,7 +18,7 @@ const Sidebar = () => {
     return (
         <>
             <div
-                className={`sm:w-20 md:w-32  lg:w-72  bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
+                className={`relative z-[3] sm:w-20 md:w-32  lg:w-72  bg-dark-purple h-screen p-5  pt-8 duration-300`}
             >
                 <div className="flex gap-x-4 items-center">
                     <img

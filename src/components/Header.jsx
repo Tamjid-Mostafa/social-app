@@ -8,7 +8,7 @@ const Header = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar">
+    <nav className="sticky top-0 z-[3] w-full flex py-6 justify-between items-center navbar">
       <h1 className="font-bold  leading-5 text-xl text-gradient py-1">
         Home Page
 
@@ -26,7 +26,6 @@ const Header = () => {
             <Link to={`${nav.id}`}>{nav.icon}</Link>
           </li>
         ))}
-        <FaUser className={`font-bold cursor-pointer text-white text-[32px] ml-10 `}/>
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">

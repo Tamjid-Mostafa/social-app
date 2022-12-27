@@ -8,10 +8,10 @@ const Home = () => {
       <div className={`bg-primary ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
           <Hero />
+          <Post />
+          <PostCard />
         </div>
       </div>
-      <Post />
-      <PostCard />
     </>
   )
 }
