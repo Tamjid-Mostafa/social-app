@@ -1,28 +1,36 @@
-import React, { useEffect, useReducer } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import { useContext } from 'react'
 import { createContext } from 'react'
-import { FETCH_DONE, FETCH_ERROR, FETCH_START } from '../state/actionTypes/actionTypes'
-import { initialState, postReducer } from '../state/postReducer'
 
 const POST_CONTEXT = createContext()
 
 const PostProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(postReducer, initialState)
 
-  useEffect(() => {
-    dispatch({type: FETCH_START})
-    fetch("http://localhost:5000/posts")
-    .then(res => res.json())
-    .then(data => {
-      dispatch({type: FETCH_DONE, payload: data})
-      console.log(data);
-    })
-    .catch(err => {
-      dispatch({type: FETCH_ERROR})
-    })
-  }, [])
+  const url = `http://localhost:5000/posts`;
+
+  /* Load Post  */
+  const {
+    data: post = [],
+    isLoading,
+    refetch
+  } = useQuery({
+    queryKey: ["post"],
+    queryFn: async () => {
+      const res = await axios.get(url, {
+        headers: {
+          "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("social-app token")}`,
+        },
+      });
+      return res.data;
+      
+    },
+  });
+
+
  
-  const value = {state, dispatch}
+  const value = {refetch, post, isLoading}
   return (
     <POST_CONTEXT.Provider value={value}>{children}</POST_CONTEXT.Provider>
   )

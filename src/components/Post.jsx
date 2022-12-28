@@ -1,5 +1,6 @@
 import React from 'react'
 import { useContext } from 'react'
+import { Helmet } from 'react-helmet'
 import { AuthContext } from '../context/AuthProvider'
 import { usePost } from '../context/PostProvider'
 import styles, { layout } from '../style'
@@ -7,12 +8,17 @@ import Loader from './Loader'
 import PostCard from './PostCard'
 
 const Post = () => {
-  const { state, loading, error } = usePost();
-  console.log(state.post);
-  const posts = state.post;
+  const { state, loading, error, post } = usePost();
+
+
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Post - Social App</title>
+        <link rel="" href="" />
+      </Helmet>
       {
         loading ? <Loader />
           :
@@ -20,8 +26,8 @@ const Post = () => {
             <>
               <h1 className={`${styles.heading2}`}>
                 {
-                  posts.map(post => <PostCard
-                    key={post._id} post={post} />)
+                  post.map(p => <PostCard
+                    key={p._id} post={p} />)
                 }
               </h1>
             </>

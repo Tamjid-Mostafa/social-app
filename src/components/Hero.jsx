@@ -7,6 +7,8 @@ import EmojiCom from './EmojiCom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loader from './Loader';
+import { usePost } from '../context/PostProvider';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -14,6 +16,7 @@ const Hero = () => {
 
   const { user, loading, setLoading } = useContext(AuthContext);
   const [emoji, setEmoji] = useState(false);
+  const { refetch, isLoading } = usePost();
 
 
   const {
@@ -44,20 +47,21 @@ const Hero = () => {
             image: imageData.data.url,
             postedTime: time,
             userName: user.displayName,
-            userEmail: user.email
+            userEmail: user.email,
+            userImage: user.photoURL
           };
           /* -----Save product to the----- */
           axios.post("http://localhost:5000/add-post", post)
             .then((res) => {
-              setLoading(true);
               toast.success(`Share post successfully`);
               reset();
+              refetch();
               setLoading(false);
+
 
             })
             .catch((err) => {
               console.error(err);
-              setLoading(false);
             });
         }
       });
@@ -66,6 +70,11 @@ const Hero = () => {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Home - Social App</title>
+        <link rel="" href="" />
+      </Helmet>
       {
         loading ? <Loader />
           :
@@ -85,42 +94,42 @@ const Hero = () => {
                       <form
                         onSubmit={handleSubmit(handleAddPost)}
                       >
-                        
-                          <textarea
-                            disabled={!user?.uid ? true : false}
-                            {...register("post")}
-                            id="chat" rows="1" className="block sm:mx-2 mx-4 p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..." />
-                          {errors.text && (
-                            <p className="text-red-500">{errors.text.message}</p>
-                          )}
-                          
-                        <div className="flex justify-between">
-                        <div className="inline-flex gap-2 md:gap-4 sm:mx-2 mx-4 p-2.5 w-full text-lg text-cyan-400 lg:text-2xl  rounded-lg  bg-primary ">
-                          <label htmlFor="image">
-                            <FaImage />
-                            <input
 
-                              disabled={!user?.uid ? true : false}
-                              {...register("image", {
-                                required: "Image is Required",
-                              })}
-                              className="hidden "
-                              type="file"
-                              id="image"
-                              accept="image/*"
+                        <textarea
+                          disabled={!user?.uid ? true : false}
+                          {...register("post")}
+                          id="chat" rows="1" className="block sm:mx-2 mx-4 p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..." />
+                        {errors.text && (
+                          <p className="text-red-500">{errors.text.message}</p>
+                        )}
+
+                        <div className="flex justify-between">
+                          <div className="inline-flex gap-2 md:gap-4 sm:mx-2 mx-4 p-2.5 w-full text-lg text-cyan-400 lg:text-2xl  rounded-lg  bg-primary ">
+                            <label htmlFor="image">
+                              <FaImage />
+                              <input
+
+                                disabled={!user?.uid ? true : false}
+                                {...register("image", {
+                                  required: "Image is Required",
+                                })}
+                                className="hidden "
+                                type="file"
+                                id="image"
+                                accept="image/*"
                               />
-                            {errors.image && (
-                              <p className="text-red-500">{errors.image.message}</p>
-                            )}
-                          </label>
-                          <>
-                            <FaSmile onClick={() => setEmoji(!emoji)} />
-                            {
-                              emoji && <EmojiCom />
-                            }
-                          </>
-                        </div>
-                        <button
+                              {errors.image && (
+                                <p className="text-red-500">{errors.image.message}</p>
+                              )}
+                            </label>
+                            <>
+                              <FaSmile onClick={() => setEmoji(!emoji)} />
+                              {
+                                emoji && <EmojiCom />
+                              }
+                            </>
+                          </div>
+                          <button
                             className={`inline-flex justify-center p-2 
                            text-blue-600 rounded-full cursor-pointer
                           ${!user?.uid ? "disabled:cursor-not-allowed disabled:text-gray-600" : ""} hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600`}>
