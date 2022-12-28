@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import Post from "./Post";
 import PostCard from "./PostCard";
 import Footer from "./Footer";
+import Loader from "./Loader";
 
 
 export {
@@ -11,4 +12,5 @@ export {
     Post,
     PostCard,
     Footer,
+    Loader,
 }

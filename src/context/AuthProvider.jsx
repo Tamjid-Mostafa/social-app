@@ -1,7 +1,6 @@
-import React, { createContext, useEffect, useReducer, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from "firebase/auth";
 import app from '../firebase/firebase.config';
-import { initialState, reducer } from '../state/userReducer';
 
 export const AuthContext = createContext();
 const auth = getAuth(app)
@@ -11,7 +10,7 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+
     /* ----------------Google Sign In------------ */
   const providerGoogleSignIn = (provider) => {
     setLoading(true);

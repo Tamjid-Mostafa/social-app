@@ -1,15 +1,18 @@
+import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setAuthToken } from "../../api/auth";
 import Button from "../../components/Button";
 import { AuthContext } from "../../context/AuthProvider";
 import styles from "../../style";
 
 const Login = () => {
   const [loginError, setLoginError] = useState("");
-  const { providerGoogleSignIn, signIn } = useContext(AuthContext);
+  const { providerGoogleSignIn, signIn, user } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,22 +31,47 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     providerGoogleSignIn(googleProvider)
       .then((result) => {
-        navigate(from, { replace: true });
+        const user = result.user;
+        if (user.uid) {
+          const userInfo = {
+            name: user.displayName,
+            email: user.email,
+            role: "buyer",
+          };
+          /* ================ User Info Save To DataBase =========== */
+          axios
+            .post(
+              "http://localhost:5000/users",
+
+              userInfo
+            )
+            .then((res) => {
+              const firstname = userInfo.name.split(" ")[0];
+              toast.success(`Hello! ${firstname}
+              Welcome, to Social App. `);
+              setAuthToken(userInfo);
+              navigate(from, { replace: true });
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
       })
       .catch((error) => console.error(error));
   };
 
   const handleLogin = (data) => {
-    console.log(data);
     setLoginError("");
     signIn(data.email, data.password)
-      .then((result) => {
-
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        setLoginError(error.message);
-      });
+    .then((result) => {
+      
+      setAuthToken(result.user);
+      toast.success(`Welcome, to Social App.`);
+      navigate(from, { replace: true });
+    })
+    .catch((error) => {
+      setLoginError(error.message);
+    });
   };
 
   return (

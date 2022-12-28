@@ -1,24 +1,36 @@
 import { useContext, useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { Calendar, Chart, Chart_fill, Chat, Control, Folder, icon, logo, Search, Setting, User } from "../assets";
 import { AuthContext } from "../context/AuthProvider";
 import Button from "./Button";
+import Modal from "./Modal";
 const Sidebar = () => {
-    const { user } = useContext(AuthContext);
-    console.log(user);
+    const [showModal, setShowModal] = useState(false)
+    const { user, providerSignOut } = useContext(AuthContext);
+
+    /* Handle Logout */
+
+    const handleLogout = () => {
+        localStorage.removeItem("social-app token")
+        providerSignOut()
+            .then(() => { })
+            .catch((err) => console.error(err));
+    };
+
+
     const Menus = [
-        { title: "Inbox", src: Chat },
-        { title: "Accounts", src: User, gap: true },
-        { title: "Schedule ", src: Calendar },
-        { title: "Search", src: Search },
-        { title: "Files ", src: Folder, gap: true },
-        { title: "Setting", src: Setting },
+        { title: "Inbox", to: "Inbox", src: Chat },
+        { title: "Accounts", to: "Accounts", src: User, gap: true },
+        { title: "Schedule ", to: "Schedule ", src: Calendar },
+        { title: "Search", to: "Search", src: Search },
+        { title: "About ", to: "/about ", src: Folder, gap: true },
     ];
 
     return (
         <>
             <div
-                className={`relative z-[3] sm:w-20 md:w-32  lg:w-72  bg-dark-purple h-screen p-5  pt-8 duration-300`}
+                className={`relative sm:w-20 md:w-32  lg:w-72  bg-dark-purple  p-5  pt-8 duration-300`}
             >
                 <div className="flex gap-x-4 items-center">
                     <img
@@ -34,19 +46,35 @@ const Sidebar = () => {
                 </div>
                 <ul className="pt-6">
                     {Menus.map((Menu, index) => (
-                        <li
-                            key={index}
-                            className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                        <Link key={index} to={Menu.to}>
+                            <li
+
+                                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
               ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"
-                                } `}
-                        >
-                            <img src={Menu.src} alt="" />
-                            <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
-                                {Menu.title}
-                            </span>
-                        </li>
+                                    } `}
+                            >
+                                <img src={Menu.src} alt="" />
+                                <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
+                                    {Menu.title}
+                                </span>
+                            </li>
+                        </Link>
                     ))}
-                    <li>
+                    {
+                        user?.uid ? <li onClick={handleLogout} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
+                            <img src={Setting} alt="" />
+                            <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
+                                Log Out
+                            </span>
+                        </li> : <Link to="/login" className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
+                            <img src={Setting} alt="" />
+                            <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
+                                Log In
+                            </span>
+                        </Link>
+                    }
+                    <li onClick={() => setShowModal(true)}
+                    >
                         <Button styles="sm:flex hidden sm:scale-0  lg:scale-100 justify-center ">Post</Button>
                     </li>
                 </ul><div className="rounded-lg  sm:flex sm:scale-70 mt-10 lg:scale-100 origin-left">
@@ -67,6 +95,9 @@ const Sidebar = () => {
 
             </div>
 
+            {
+                showModal ? <Modal setShowModal={setShowModal} showModal={showModal} /> : null
+            }
 
         </>
     );
