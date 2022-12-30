@@ -7,7 +7,7 @@ const POST_CONTEXT = createContext()
 
 const PostProvider = ({ children }) => {
 
-  const url = `http://localhost:5000/posts`;
+  const url = `https://social-app-server-tamjid-mostafa.vercel.app/posts`;
 
   /* Load Post  */
   const {

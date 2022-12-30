@@ -5,6 +5,7 @@ import Main from "../Layout/Main";
 import About from "../pages/About/About";
 import Home from "../pages/Home/Home";
 import Media from "../pages/Media/Media";
+import MostLiked from "../pages/MostLiked/MostLiked";
 import Login from "../pages/Register/Login";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><About /></PrivateRoute>
             },
             {
+                path: "/top-post",
+                element: <PrivateRoute><MostLiked /></PrivateRoute>
+            },
+            {
                 path: "/media",
                 element:<PrivateRoute><Media /></PrivateRoute>
             },
@@ -39,7 +44,7 @@ const router = createBrowserRouter([
                 path: "/post-details/:id",
                 element: <PrivateRoute><PostDetails /></PrivateRoute>,
                 loader: ({ params }) =>
-                fetch(`http://localhost:5000/post/${params.id}`),
+                fetch(`https://social-app-server-tamjid-mostafa.vercel.app/post-details/${params.id}`),
             }
         ]
     }

@@ -16,7 +16,7 @@ const Main = () => {
       :
       <div className="bg-primary w-full overflow-hidden relative">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-        <div className={`${styles.boxWidth} flex relative`}>
+        <div className={`${styles.boxWidth} flex `}>
           <Sidebar />
 
           <div className="flex-1">

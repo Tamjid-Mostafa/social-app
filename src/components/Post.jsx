@@ -10,8 +10,6 @@ import PostCard from './PostCard'
 const Post = () => {
   const { state, loading, error, post } = usePost();
 
-
-
   return (
     <>
       <Helmet>
@@ -26,7 +24,7 @@ const Post = () => {
             <>
               <h1 className={`${styles.heading2}`}>
                 {
-                  post.map(p => <PostCard
+                  post?.map(p => <PostCard
                     key={p._id} post={p} />)
                 }
               </h1>

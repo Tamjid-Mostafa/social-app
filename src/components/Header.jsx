@@ -1,18 +1,30 @@
 import React, { useState } from 'react'
 import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { close, logo, menu } from '../assets';
+import { close, icon, logo, menu } from '../assets';
 import { navLinks } from '../constants';
+import Button from './Button';
 
 const Header = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
   return (
     <nav className="sticky top-0 z-[3] w-full flex py-6 justify-between items-center navbar">
-      <h1 className="font-bold  leading-5 text-xl text-gradient py-1">
-        Home Page
+      <>
+      <div className="flex gap-x-4 items-center sm:hidden block">
+                    <img
+                        src={icon}
+                        className={`cursor-pointer duration-500 w-10`}
+                        alt="logo"
+                    />
+                    <h1
+                        className={`text-dimWhite origin-left font-medium text-xl duration-200 sm:hidden ss:scale-100 scale-0  `}
+                    >
+                        Social{" "}<span className={`text-gradient origin-left font-medium text-xl duration-200 `}>App</span>
+                    </h1>
+                </div>
 
-      </h1>
+      </>
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
@@ -57,6 +69,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
+      
     </nav>
   )
 }

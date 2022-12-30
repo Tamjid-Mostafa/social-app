@@ -40,7 +40,7 @@ const Register = () => {
           console.log(userInfo);
           /*User Info Save To DataBase*/
           axios.post(
-            "http://localhost:5000/users",
+            "https://social-app-server-tamjid-mostafa.vercel.app/users",
 
             userInfo
           )
@@ -97,7 +97,7 @@ const Register = () => {
                 };
                 /* User Info Save To DataBase */
                 axios.post(
-                  "http://localhost:5000/users",
+                  "https://social-app-server-tamjid-mostafa.vercel.app/users",
 
                   userInfo
                 )

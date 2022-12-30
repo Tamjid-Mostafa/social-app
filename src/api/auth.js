@@ -2,7 +2,7 @@ export const setAuthToken = user => {
     const currentUser = {
         email: user.email,
     }
-    fetch(`http://localhost:5000/user/${user?.email}`, {
+    fetch(`https://social-app-server-tamjid-mostafa.vercel.app/user/${user?.email}`, {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',

@@ -51,7 +51,7 @@ const Hero = () => {
             userImage: user.photoURL
           };
           /* -----Save product to the----- */
-          axios.post("http://localhost:5000/add-post", post)
+          axios.post("https://social-app-server-tamjid-mostafa.vercel.app/add-post", post)
             .then((res) => {
               toast.success(`Share post successfully`);
               reset();
@@ -130,6 +130,7 @@ const Hero = () => {
                             </>
                           </div>
                           <button
+                          disabled={!user?.uid ? true : false}
                             className={`inline-flex justify-center p-2 
                            text-blue-600 rounded-full cursor-pointer
                           ${!user?.uid ? "disabled:cursor-not-allowed disabled:text-gray-600" : ""} hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600`}>

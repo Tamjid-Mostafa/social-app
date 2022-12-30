@@ -10,16 +10,19 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import ProfileProvider from "./context/ProfileProvider";
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <ProfileProvider>
         <PostProvider>
           <Toaster />
           <App />
         </PostProvider>
+        </ProfileProvider>
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>

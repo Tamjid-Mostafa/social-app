@@ -10,7 +10,7 @@ import styles from '../../style';
 const Media = () => {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5000/user-posts?email=${user?.email}`;
+  const url = `https://social-app-server-tamjid-mostafa.vercel.app/user-posts?email=${user?.email}`;
 
   /* Load Post  */
   const {
@@ -32,7 +32,6 @@ const Media = () => {
   });
 
 
-  console.log(post);
 
   return (
     <>

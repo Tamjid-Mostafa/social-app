@@ -41,7 +41,7 @@ const Login = () => {
           /* ================ User Info Save To DataBase =========== */
           axios
             .post(
-              "http://localhost:5000/users",
+              "https://social-app-server-tamjid-mostafa.vercel.app/users",
 
               userInfo
             )
@@ -63,26 +63,35 @@ const Login = () => {
   const handleLogin = (data) => {
     setLoginError("");
     signIn(data.email, data.password)
-    .then((result) => {
-      
-      setAuthToken(result.user);
-      toast.success(`Welcome, to Social App.`);
-      navigate(from, { replace: true });
-    })
-    .catch((error) => {
-      setLoginError(error.message);
-    });
+      .then((result) => {
+        setAuthToken(result.user);
+        toast.success(`Welcome, to Social App.`);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        setLoginError(error.message);
+      });
   };
 
   return (
     <>
-      <section className={`${styles.flexCenter} ${styles.boxWidth}`}>
+      <section className={`${styles.flexStart} ${styles.boxWidth}`}>
         <div className="mx-auto h-full sm:w-max">
           <div className="m-auto  py-12">
             <div className="mt-12 rounded-3xl border  dark:border-gray-700 mx-6 sm:-mx-10 p-8 sm:p-10">
-              <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
-                Login to your account
-              </h3>
+              <div>
+                <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
+                  Login to your account
+                </h3>
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-gray-700 dark:text-white">
+                    ID: tamjid@tamjid.com
+                  </h3>
+                  <h3 className="text-lg font-semibold text-gray-700 dark:text-white">
+                    Password: 123456
+                  </h3>
+                </div>
+              </div>
               <div className="mt-12">
                 <button
                   onClick={handleGoogleSignIn}
