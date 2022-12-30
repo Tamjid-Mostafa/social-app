@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaPen, FaPenAlt, FaUser } from "react-icons/fa";
+import { FaArrowsAlt, FaBars, FaPen, FaPenAlt, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Calendar, Chart, Chart_fill, Chat, Control, Folder, icon, logo, Search, Setting, User } from "../assets";
 import { AuthContext } from "../context/AuthProvider";
@@ -7,6 +7,8 @@ import Button from "./Button";
 import Modal from "./Modal";
 const Sidebar = () => {
     const [showModal, setShowModal] = useState(false)
+    const [open, setOpen] = useState(false)
+    
     const { user, providerSignOut } = useContext(AuthContext);
 
     /* Handle Logout */
@@ -30,12 +32,12 @@ const Sidebar = () => {
     return (
         <>
             <div
-                className={`sm:block hidden sm:w-20 md:w-32  lg:w-72  bg-dark-purple  p-5  pt-8 duration-300`}
+                className={`sm:block ${open ? "" : "hidden"} sm:w-20 md:w-32  lg:w-72  bg-dark-purple  p-5  pt-8 duration-300`}
             >
                 <div className="flex gap-x-4 items-center">
                     <img
                         src={icon}
-                        className={`cursor-pointer duration-500 w-10`}
+                        className={`cursor-pointer duration-500 w-10 sm:block hidden`}
                         alt="logo"
                     />
                     <h1
@@ -49,21 +51,21 @@ const Sidebar = () => {
                         <Link key={index} to={Menu.to}>
                             <li
 
-                                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-[0.5rem] sm:text-lg lg:text-2xl items-center gap-x-4 
               ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"
                                     } `}
                             >
                                 <img src={Menu.src} alt="" />
-                                <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
+                                <span className={`sm:flex text-[0.5rem] sm:text-lg lg:text-2xl sm:scale-10  lg:scale-100 origin-left duration-200`}>
                                     {Menu.title}
                                 </span>
                             </li>
                         </Link>
                     ))}
                     {
-                        user?.uid ? <li onClick={handleLogout} className={`flex rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white lg:scale-100 sm:scale-95 scale-0`}>
+                        user?.uid ? <li onClick={handleLogout} className={`flex rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white lg:scale-100 sm:scale-95 scale-20`}>
                             <img src={Setting} alt="" />
-                            <span className={`sm:flex hidden sm:scale-0  lg:scale-100 origin-left duration-200`}>
+                            <span className={`sm:flex text-[0.5rem] sm:scale-10  lg:scale-100 origin-left duration-200`}>
                                 Log Out
                             </span>
                         </li> : <Link to="/login" className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
@@ -73,7 +75,7 @@ const Sidebar = () => {
                             </span>
                         </Link>
                     }
-                    <li onClick={() => setShowModal(true)}
+                    <li /* onClick={() => setShowModal(!showModal)} */
                     >
                         <Button styles="ss:flex hidden lg:scale-100 sm:scale-75 scale-0 justify-center ">Post</Button>
 
@@ -99,12 +101,12 @@ const Sidebar = () => {
                 </div>
 
             </div>
-{/* 
-            {
+
+            {/* {
                 showModal ? <Modal setShowModal={setShowModal} showModal={showModal} /> : null
             } */}
-            <label /* onClick={() => setShowModal(true)} */>
-                <Button styles="fixed shadow-4xl z-50 bottom-[20px] right-[20px] w-16 h-16 sm:hidden block justify-center  "><FaPenAlt /></Button>
+            <label htmlFor="sidebar" onClick={() => setOpen(!open)}>
+                <Button id="sidebar" styles="fixed shadow-4xl z-50 bottom-[20px] right-[20px] w-16 h-16 sm:hidden block justify-center  "><>{open ? <FaArrowsAlt /> : <FaBars />}</></Button>
             </label>
         </>
     );

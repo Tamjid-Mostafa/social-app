@@ -44,7 +44,7 @@ const PostCard = ({post, refetch}) => {
       <div className="relative flex bg-primary transition-300 hover:scale-105 duration-500 rounded-lg mx-4 my-4 md:mx-auto max-w-md md:max-w-2xl ">
      
         <div className="flex items-start px-4 py-6">
-        <small className="absolute top-4 right-6 text-sm text-gray-300">Posted on :{postedTime?.slice(11)}</small>
+        <small className="absolute top-4 right-6 text-sm text-gray-300"><span className="md:hidden hidden ">Posted on :</span>{postedTime?.slice(11)}</small>
           <img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={userImage} alt="avatar" />
           <div className="">
             <div className="relative flex items-center justify-between">
