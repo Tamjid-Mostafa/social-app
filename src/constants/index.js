@@ -17,11 +17,6 @@ export const navLinks = [
     title: "Message",
     icon: <FaEnvelope />,
   },
-  {
-    id: "/login",
-    title: "Log In",
-    icon: <FaEnvelope />,
-  },
   
   
 ];
